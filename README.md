@@ -14,5 +14,5 @@ estadísticos descriptivos y correlaciones de las variables utilizadas en los mo
 Para ello, se ha empleado la librería EdSurvey.
 
 Finalmente, el archivo restante muestra el código que se ha utilizado para depurar los archivos .csv
-descargados de la página web del INE para crear la capa de secciones censales solo con la información
-que me interesaba.
+descargados de la página web del INE con la información de carácter socioeconómico de las secciones
+censales.
