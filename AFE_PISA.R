@@ -16,7 +16,7 @@ library(corrr)
 Datos_fiabilidad <- as.data.frame(read_sav("C:/Users/alex9_000/Desktop/Universidad/Master/TFM/Datos/ESP_3F.sav"))
 Datos_fiabilidad <- Datos_fiabilidad[,1:11]
 Datos_fiabilidad <- na.omit(Datos_fiabilidad)
-#Divisi�n del dataset en tres: uno por cada variable
+#División del dataset en tres: uno por cada variable
 Datos_fiabilidad_ATTLNACT <- Datos_fiabilidad[,1:3]
 Datos_fiabilidad_MASTGOAL <- Datos_fiabilidad[,4:6]
 Datos_fiabilidad_RESILIENCE <- Datos_fiabilidad[,7:11]
@@ -37,14 +37,14 @@ omega.ATTLNACT <- omega(Datos_fiabilidad_ATTLNACT, varphi = 0.1, se= FALSE, test
 omega.MASTGOAL <- omega(Datos_fiabilidad_MASTGOAL, varphi = 0.1, se= FALSE, test=FALSE, complete=TRUE)
 omega.RESILIENCE <- omega(Datos_fiabilidad_RESILIENCE, varphi = 0.1, se= FALSE, test=FALSE, complete=TRUE)
 
-#Correlaci�n item-test:
+#Correlación item-test:
 co <- correlate(Datos_fiabilidad)
 inter_item <- colMeans( co[, 2:11], na.rm = TRUE )
 inter_item
-mean(inter_item) #Correlaci�n media entre los items: 0.2362628
+mean(inter_item) #Correlación media entre los items: 0.2362628
 Datos_fiabilidad$score <- rowMeans(Datos_fiabilidad)
 item_total <- Datos_fiabilidad %>% correlate() %>% focus(score)
-mean(item_total$score) #Correlaci�n item-total: 0.5486906
+mean(item_total$score) #Correlación item-total: 0.5486906
 
 ####################################################################################
 #AFE
@@ -59,9 +59,9 @@ skew(Datos_AFE, na.rm = TRUE, type = 3)
 kurtosi(Datos_AFE, na.rm = TRUE, type = 3)
 mardia(Datos_AFE, na.rm = TRUE)
 ks.test(Datos_AFE,pnorm)
-#No existe normalidad multivariante: utilizaremos un m�todo robusto de ULS
+#No existe normalidad multivariante: utilizaremos un método robusto de ULS
 
-#Calcular matriz policórica
+#Calcular matriz policÃ³rica
 policorica <- hetcor(Datos_AFE)$correlations
 ggcorrplot(policorica,type="lower",hc.order = T)
 
@@ -69,7 +69,7 @@ ggcorrplot(policorica,type="lower",hc.order = T)
 #1. Prueba de Bartlett
 p_esf <- cortest.bartlett(policorica)
 p_esf$p.value
-#El resultado del p-valor: 3.975117e-79 es muy pequeño, por lo que podemos rechazar H0, que indica que las variables no están correlacionadas
+#El resultado del p-valor: 3.975117e-79 es muy pequeÃ±o, por lo que podemos rechazar H0, que indica que las variables no están correlacionadas
 #2.KMO:
 KMO(policorica)
 #El resultado general es 0.81, por lo que es un valor aceptable para continuar con el AFE
