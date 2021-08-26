@@ -65,31 +65,3 @@ summary(fit5, fit.measures=TRUE, standardized=TRUE)
 fit6 <- cfa(modelo2factores, Datos_AFC, estimator="ULS", ordered=TRUE, orthogonal=FALSE)
 summary(fit6, fit.measures=TRUE, standardized=TRUE)
 #Malos índices de bondad del ajuste: CFI = 0.869; TLI = 0.833; RMSEA = 0.147; SRMR = 0.119
-
-
-#####################################################################################################
-
-
-#Invarianza: NO ME SALE
-Datos_Invarianza <- as.data.frame(read_sav("C:/Users/alex9_000/Desktop/Universidad/Master/TFM/Datos/2.AFC_PISA/Datos_Invarianza.sav"))
-
-
-Observaciones_grupos <- data.frame(Datos_AFC %>% count(CNTSCHID, sort=TRUE))
-Datos_AFC <- merge(Datos_AFC, Observaciones_grupos, by="CNTSCHID")
-Datos_AFC$n2 <- ifelse(Datos_AFC$n < 11, 1, 0)
-Datos_AFC3 <- Datos_AFC[Datos_AFC$n2 == 0, ]
-Datos_AFC3 <- na.exclude(Datos_AFC3)
-Datos_AFC3 <- Datos_AFC3[Datos_AFC3$CNTSCHID != 72400005, ]
-Datos_AFC3 <- Datos_AFC3[Datos_AFC3$CNTSCHID != 72400097, ]
-Datos_AFC3 <- Datos_AFC3[Datos_AFC3$CNTSCHID != 72400096, ]
-View(Varianza_grupos)
-
-config <- cfa(modelo, Datos_AFC3, group="CNTSCHID", estimator="ULSM")
-weak <- cfa(modelo, Datos_AFC3, group="CNTSCHID", group.equal="loadings", estimator="ULSM")
-strong<- cfa(modelo, Datos_AFC3, group="CNTSCHID", group.equal= c("loadings", "intercepts"), estimator="ULSM")
-strict<- cfa(modelo, Datos_AFC3, group="CNTSCHID", group.equal= c("loadings", "intercepts", "residuals"), estimator="ULSM")
-
-anova(config, weak, strong, strict)
-
-FORMA2<-measurementInvariance(model=modelo, data=Datos_AFC, group="CNTSCHID")
-
