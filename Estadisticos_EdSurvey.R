@@ -305,29 +305,3 @@ RESILIENCE <- summary2(Datos_PISA, "resilience", weightVar = NULL)
 SCH_ESCS <- summary2(Datos_PISA, "sch_escs", weightVar = NULL)
 RNM_PERSONA <- summary2(Datos_PISA, "RNM_Persona", weightVar = NULL)
 POBR_REL <- summary2(Datos_PISA, "Pobr_Rel", weightVar = NULL)
-
-
-################################################################################
-
-### PASO 1: MODELOS NULOS ###
-
-Modelo.Nulo.Lectura <- mixed.sdf(read~(1|cntschid), data=Datos_PISA, weightVars=c("w_fstuwt","w_schgrnrabwt"), weightTransformation=FALSE, verbose=0)
-summary(Modelo.Nulo.Lectura)
-
-Modelo.Nulo.Matemáticas <- mixed.sdf(math~(1|cntschid), data=Datos_PISA, weightVars=c("w_fstuwt","w_schgrnrabwt"), weightTransformation=FALSE, verbose=0)
-summary(Modelo.Nulo.Matemáticas)
-prop.test(x=Modelo.Nulo.Ciencias$coef,25701)
-
-Modelo.Nulo.Ciencias <- mixed.sdf(scie~(1|cntschid), data=Datos_PISA, weightVars=c("w_fstuwt","w_schgrnrabwt"), weightTransformation=FALSE, verbose=0)
-summary(Modelo.Nulo.Ciencias)
-Modelo.Nulo.Ciencias$Vimp
-
-################################################################################
-
-### PASO 2: VARIABLES DE CONTROL ###
-Modelo.1.Lectura <- mixed.sdf(pv1read~(1|cntschid), data=Datos_PISA, weightVars=c("w_fstuwt","w_schgrnrabwt"), weightTransformation=FALSE, verbose=0)
-summary(Modelo.1.Lectura)
-Modelo.2.Lectura <- mixed.sdf(pv1read~Sex+Repeat+Immig+(1|cntschid), data=Datos_PISA, weightVars=c("w_fstuwt","w_schgrnrabwt"), weightTransformation=FALSE, verbose=0)
-summary(Modelo.2.Lectura)
-anova(Modelo.2.Lectura, Modelo.2.Lectura)
-
